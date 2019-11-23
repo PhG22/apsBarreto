@@ -1,3 +1,7 @@
+Autor: Pedro Henrique Guimarães Gomes - UTFPR 2019/2
+RA: 2193000
+Fisica Teórica 1 - S71 - Prof. Rafael C. Barreto
+
 
 #include <stdio.h>
 #include <stdlib.h>
