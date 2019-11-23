@@ -2,7 +2,6 @@ Autor: Pedro Henrique Guimarães Gomes - UTFPR 2019/2
 RA: 2193000
 Fisica Teórica 1 - S71 - Prof. Rafael C. Barreto
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -32,7 +31,7 @@ int raio;
 
 SDL_Window* window = NULL;
 
-SDL_windower* render = NULL;
+SDL_Window* render = NULL;
 
 SDL_Surface* imagem_bola = NULL;
 
@@ -59,7 +58,7 @@ void criaJanela(int WINDOW_WIDTH, int WINDOW_HEIGHT){
         }
         else{
 
-            render = SDL_Createwindower(window, -1, SDL_windowER_ACCELERATED | SDL_windowER_PRESENTVSYNC);
+            render = SDL_CreateWindow(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
             if(render == NULL){
 
@@ -67,7 +66,7 @@ void criaJanela(int WINDOW_WIDTH, int WINDOW_HEIGHT){
             }
             else{
 
-                SDL_SetwindowDrawColor( render, 0xFF, 0xFF, 0xFF, 0xFF);
+                SDL_SetRenderDrawColor( render, 0xFF, 0xFF, 0xFF, 0xFF);
             }
         }
     }
@@ -116,7 +115,7 @@ void renderizaCena(Bola* bola, int n_bolas){
         bola_atual.x = bola[i].x;
         bola_atual.y = bola[i].y;
 
-        SDL_windowCopy(render, textura_bola, NULL, &bola_atual);
+        SDL_RenderCopy(render, textura_bola, NULL, &bola_atual);
     }
 }
 
@@ -135,7 +134,7 @@ int sobreposicao(Bola* bola, int i, int j){
     y = achaCentro(bola[i].y) - achaCentro(bola[j].y);
     distancia_centros = x*x + y*y;
 
-    if(distancia_centros <= (pow(raio,2) * 4) + 5) 
+    if(distancia_centros <= (pow(raio,2) * 4) + 5)
         return 1;
 
     return 0;
@@ -219,7 +218,7 @@ void atualizaPosicao(Bola* bola, int n_bolas){
 
 //confere se há colisões
 void hitDetection(Bola* bola, int n_bolas, int WINDOW_WIDTH, int WINDOW_HEIGHT){
-	
+
 	    double distancia_centros;
     double x, y;
 
@@ -332,10 +331,10 @@ int main(int argc, char** argv){
 
 
         // limpa a tela
-        SDL_windowClear (render);
+        SDL_RenderClear (render);
 
         // define a tela como branco
-        SDL_SetwindowDrawColor ( render, 0xFF, 0xFF, 0xFF, 0xFF);
+        SDL_SetRenderDrawColor ( render, 0xFF, 0xFF, 0xFF, 0xFF);
 
         // renderiza as bolas na tela
         renderizaCena(bola, n_bolas);
@@ -346,8 +345,8 @@ int main(int argc, char** argv){
         // checa se tem alguma colisão
         hitDetection(bola, n_bolas, WINDOW_WIDTH, WINDOW_HEIGHT);
 
-        // mostra um novo window
-        SDL_windowPresent (render);
+        // mostra um novo render
+        SDL_RenderPresent (render);
 
         double energia_cinetica = 0;
 
@@ -360,7 +359,7 @@ int main(int argc, char** argv){
     //desaloca variaveis
     free(bola);
     SDL_DestroyTexture(textura_bola);
-    SDL_Destroywindower(render);
+    SDL_Destroywindow(render);
     SDL_DestroyWindow(window);
 
     return (0);
