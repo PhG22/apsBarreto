@@ -162,28 +162,27 @@ void atualizaPosicao(Bola* bola, int n_bolas) {
 
 void atualizaVelocidade(Bola* bola, int a, int b) {
 
-	//eixo de colisao
+	//define o eixo de colisão
 	double colisao_x = (bola[a].x + raio) - (bola[b].x + raio);
 	double colisao_y = (bola[a].y + raio) - (bola[b].y + raio);
 
 	double colisao = colisao_x * colisao_x + colisao_y * colisao_y;
 
-	//velocidades projetadas
+	//projeta as componentes das velocidades no eixo de colisão
 	double vx1_proj = ((bola[a].vx * colisao_x) + (bola[a].vy * colisao_y)) * colisao_x / colisao;
 	double vy1_proj = ((bola[a].vx * colisao_x) + (bola[a].vy * colisao_y)) * colisao_y / colisao;
 	double vx2_proj = ((bola[b].vx * colisao_x) + (bola[b].vy * colisao_y)) * colisao_x / colisao;
 	double vy2_proj = ((bola[b].vx * colisao_x) + (bola[b].vy * colisao_y)) * colisao_y / colisao;
 
-	//inverte as velocidades que estao no EIXO de colisao
+	//define as novas velovidades
 	bola[a].vx -= (vx1_proj - vx2_proj);
 	bola[a].vy -= (vy1_proj - vy2_proj);
 	bola[b].vx -= (vx2_proj - vx1_proj);
 	bola[b].vy -= (vy2_proj - vy1_proj);
 
-	//separa bolas grudadas
+	//separa bolas sobrepostas
 	if (colisao_x != 0 && colisao_y != 0) {
 
-		//soma ou diminui um pixel na posiçao das bolas
 		bola[a].x += colisao_x / fabs(colisao_x);
 		bola[a].y += colisao_y / fabs(colisao_y);
 
